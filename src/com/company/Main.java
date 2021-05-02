@@ -2,12 +2,13 @@ package com.company;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 	// write your code here
         try{
             File myStocks = new File("data/HistoricalData_1619797223602.csv");
@@ -15,7 +16,7 @@ public class Main {
 
             while(sc.hasNextLine()) {
                 String data = sc.nextLine();
-                System.out.println(data);
+                //System.out.println(data);
             }
 
             sc.close();
@@ -23,7 +24,7 @@ public class Main {
             BufferedReader reader = new BufferedReader(new FileReader("data/HistoricalData_1619797306203.csv"));
 
             List<String> lines = new ArrayList<>();
-            String line = null;
+            String line;
 
             while ((line = reader.readLine()) != null ) {
                 lines.add(line);
@@ -31,7 +32,49 @@ public class Main {
 
             System.out.println(lines.get(1));
 
-        } catch (FileNotFoundException e) {
+            //Tagesrendite = (Rendite(Zeitpunkt t) - Rendite(Zeitpunkt t-1))/Rendite(Zeitpunkt t-1))
+            double[] prices = new double[lines.size()-1];
+
+            //Prices in einem Array speichern
+            for(int i= 1; i<= lines.size()-1; i++) {
+                String datei = lines.get(i);
+                String[] dateiSplitted = datei.split(",");
+                prices[i-1] = Double.parseDouble(dateiSplitted[1].substring(1));
+            }
+
+            System.out.println(Arrays.toString(prices));
+
+
+
+            double[] tagesrendite = new double[prices.length-1];
+            double counter = 1;
+
+            for(int i = 1; i < prices.length; i++) {
+                tagesrendite[i - 1] = (prices[i-1] - prices[i]) / prices[i];
+                counter++;
+            }
+
+            System.out.println(Arrays.toString(tagesrendite));
+
+
+            //Erwartete Rendite
+            //wir sagen aus, dass die wahrscheinlichkeit der Rendite gleich sind.
+            double wahrscheinlichkeit = 1/counter;
+            double gesamtRendite = 0;
+            double erwarteteRendite = 0;
+            double average = 0;
+            Arrays.sort(tagesrendite);
+
+            for( int i = 0; i<= tagesrendite.length-1; i++ ) {
+                erwarteteRendite += wahrscheinlichkeit * tagesrendite[i];
+                gesamtRendite += tagesrendite[i];
+            }
+            average = gesamtRendite / counter;
+            System.out.println("die erwartete Rendite lautet: " + erwarteteRendite);
+            System.out.println("Durchschnittliche Rendite ist " + average*250);
+
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
