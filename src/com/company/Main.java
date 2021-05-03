@@ -9,9 +9,20 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+
+        DataController data = new DataController("data/");
+        Stock s = data.getDataForSymbol("AMD");
+        s.sortStocks();
+
+        for (int i = 0; i < s.getStockPriceSize(); ++i){
+            System.out.println("Date: " + s.getStockPriceAt(i).getDate().toString() + "\t Price : " +
+                    s.getStockPriceAt(i).getPrice().toString());
+        }
+
+
 	// write your code here
-        try{
-            File myStocks = new File("data/HistoricalData_1619797223602.csv");
+        /*try{
+            File myStocks = new File("data/AMD.csv");
             Scanner sc = new Scanner(myStocks);
 
             while(sc.hasNextLine()) {
@@ -21,7 +32,7 @@ public class Main {
 
             sc.close();
              //BufferedReader = reading the lines directly
-            BufferedReader reader = new BufferedReader(new FileReader("data/HistoricalData_1619797306203.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("data/CAT.csv"));
 
             List<String> lines = new ArrayList<>();
             String line;
@@ -77,6 +88,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+*/
     }
 }

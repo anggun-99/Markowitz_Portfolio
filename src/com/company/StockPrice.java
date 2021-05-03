@@ -15,6 +15,10 @@ public class StockPrice implements Comparable<StockPrice> {
         return date;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
     @Override
     public int compareTo(StockPrice o) {
         return getDate().compareTo(o.getDate());
