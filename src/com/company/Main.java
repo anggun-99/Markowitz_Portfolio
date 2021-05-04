@@ -11,13 +11,21 @@ public class Main {
     public static void main(String[] args) {
 
         DataController data = new DataController("data/");
-        Stock s = data.getDataForSymbol("AMD");
+        PortfolioCalculator portfolioCalculator = new PortfolioCalculator(data);
+       portfolioCalculator.calculateRenditeForStock("CAT");
+       portfolioCalculator.calculateRenditeForStock("CAT");
+       portfolioCalculator.calculateRenditeForStock("AMD");
+       portfolioCalculator.calculateRenditeForStock("CAT");
+       portfolioCalculator.calculateRenditeForStock("CAT");
+       portfolioCalculator.calculateRenditeForStock("CAT");
+
+        /*Stock s = data.getDataForSymbol("CAT");
         s.sortStocks();
 
         for (int i = 0; i < s.getStockPriceSize(); ++i){
             System.out.println("Date: " + s.getStockPriceAt(i).getDate().toString() + "\t Price : " +
                     s.getStockPriceAt(i).getPrice().toString());
-        }
+        }*/
 
 
 	// write your code here

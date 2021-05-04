@@ -40,6 +40,7 @@ public class FileController {
                 s.addNewPrice(date, price);
             }
 
+            s.sortStocks();
 
             return s;
         }catch (IOException | ParseException e){
