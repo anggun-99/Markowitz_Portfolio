@@ -3,20 +3,20 @@ package com.company;
 public class PortfolioCalculator {
     private DataController controller;
 
-    public PortfolioCalculator(DataController controller){
+    public PortfolioCalculator(DataController controller) {
         this.controller = controller;
     }
 
     public double calculateRenditeForStock(String symbol) {
         Stock s = controller.getDataForSymbol(symbol);
 
-        double sum = 0;
+       /* double sum = 0;
         for (int i = 0; i < s.getStockPriceSize(); ++i){
             System.out.println("Date: " + s.getStockPriceAt(i).getDate().toString() + "\t Price : " +
                     s.getStockPriceAt(i).getPrice().toString());
             sum += s.getStockPriceAt(i).getPrice();
-        }
-        return sum;
+        }*/
+        return 0;
     }
 
     public double calculateRiskForStocks() {

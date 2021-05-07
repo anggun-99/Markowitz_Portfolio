@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.HashMap;
 
+//saving the stock data
 public class DataController {
     private HashMap<String, Stock> stocks;
     private StockDataController controller;
