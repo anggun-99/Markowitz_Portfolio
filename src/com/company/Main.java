@@ -19,14 +19,22 @@ public class Main {
                     s.getStockPriceAt(i).getPrice().toString());
         }
        PortfolioCalculator portfolioCalculator = new PortfolioCalculator(data);
+        PortfolioCalculator portfolioCalculator1 = new PortfolioCalculator(data);
        portfolioCalculator.calculateRenditeForStock("CAT");
        portfolioCalculator.calculateRenditeForStock("CAT");
-       portfolioCalculator.calculateRenditeForStock("AMD");
+       portfolioCalculator1.calculateRenditeForStock("AMD");
        portfolioCalculator.calculateRenditeForStock("CAT");
        portfolioCalculator.calculateRenditeForStock("CAT");
        portfolioCalculator.calculateRenditeForStock("CAT");
 
-       System.out.println(portfolioCalculator.calculateRenditeForStock("CAT"));
+       System.out.println("jährliche erwartete Rendite (CAT): " + portfolioCalculator.calculateRenditeForStock("CAT")
+       + "\t jährliches Risiko (CAT): " + portfolioCalculator.calculateRiskForStocks("CAT")
+       + "\njährliche Rendite (AMD): " + portfolioCalculator1.calculateRenditeForStock("AMD")
+       + "\t jährliches Risiko (AMD): " + portfolioCalculator1.calculateRiskForStocks("AMD")
+       + "\nKovarianz von beiden Aktien: " + portfolioCalculator.calculateCovarianceOfStocks("CAT", "AMD")
+       + "\nKorrelation von beiden Aktien: " + portfolioCalculator.calculateCorrelationOfStocks("CAT","AMD")
+       + "\ndie zu erwartenden Rendite des Portfolios: " + portfolioCalculator.calculateRenditeForPortfolio("CAT","AMD")
+       + "\t das Risiko des Portfolios: " + portfolioCalculator.calculateRiskForPortfolio("CAT", "AMD"));
 	// write your code here
         /*try{
             File myStocks = new File("data/AMD.csv");
