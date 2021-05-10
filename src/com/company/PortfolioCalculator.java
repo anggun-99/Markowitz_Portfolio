@@ -10,13 +10,13 @@ public class PortfolioCalculator {
     public double calculateRenditeForStock(String symbol) {
         Stock s = controller.getDataForSymbol(symbol);
 
-       /* double sum = 0;
-        for (int i = 0; i < s.getStockPriceSize(); ++i){
+        double sum = 0;
+        for (int i = 1; i < s.getStockPriceSize(); ++i){
             System.out.println("Date: " + s.getStockPriceAt(i).getDate().toString() + "\t Price : " +
                     s.getStockPriceAt(i).getPrice().toString());
-            sum += s.getStockPriceAt(i).getPrice();
-        }*/
-        return 0;
+            sum += (s.getStockPriceAt(i).getPrice() - s.getStockPriceAt(i-1).getPrice())/s.getStockPriceAt(i-1).getPrice();
+        }
+        return Math.pow((1+sum/(s.getStockPriceSize()-1)),250) - 1;
     }
 
     public double calculateRiskForStocks() {

@@ -18,14 +18,15 @@ public class Main {
             System.out.println("Date: " + s.getStockPriceAt(i).getDate().toString() + "\t Price : " +
                     s.getStockPriceAt(i).getPrice().toString());
         }
-    /* PortfolioCalculator portfolioCalculator = new PortfolioCalculator(data);
+       PortfolioCalculator portfolioCalculator = new PortfolioCalculator(data);
        portfolioCalculator.calculateRenditeForStock("CAT");
        portfolioCalculator.calculateRenditeForStock("CAT");
        portfolioCalculator.calculateRenditeForStock("AMD");
        portfolioCalculator.calculateRenditeForStock("CAT");
        portfolioCalculator.calculateRenditeForStock("CAT");
-       portfolioCalculator.calculateRenditeForStock("CAT");*/
+       portfolioCalculator.calculateRenditeForStock("CAT");
 
+       System.out.println(portfolioCalculator.calculateRenditeForStock("CAT"));
 	// write your code here
         /*try{
             File myStocks = new File("data/AMD.csv");
