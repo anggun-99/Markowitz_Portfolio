@@ -31,7 +31,7 @@ public class Stock {
     }
 
     public StockPrice getStockPriceAt(int pos){
-        if (pos > this.stocks.size())
+        if (pos >= this.stocks.size())
             return null;
         return this.stocks.get(pos);
     }
@@ -39,4 +39,5 @@ public class Stock {
     public int getStockPriceSize(){
         return stocks.size();
     }
+
 }

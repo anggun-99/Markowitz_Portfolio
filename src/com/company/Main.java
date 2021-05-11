@@ -11,98 +11,47 @@ public class Main {
     public static void main(String[] args) {
 
         DataController data = new DataController("data/");
-        Stock s = data.getDataForSymbol("CAT");
+        Stock s = data.getDataForSymbol("AMZN");
         s.sortStocks();
 
         for (int i = 0; i < s.getStockPriceSize(); ++i){
             System.out.println("Date: " + s.getStockPriceAt(i).getDate().toString() + "\t Price : " +
                     s.getStockPriceAt(i).getPrice().toString());
         }
-       PortfolioCalculator portfolioCalculator = new PortfolioCalculator(data);
+
+        String symbol1 = "CAT";
+        String symbol2 = "AAPL";
+
+        PortfolioCalculator portfolioCalculator = new PortfolioCalculator(data);
         PortfolioCalculator portfolioCalculator1 = new PortfolioCalculator(data);
-       portfolioCalculator.calculateRenditeForStock("CAT");
-       portfolioCalculator.calculateRenditeForStock("CAT");
-       portfolioCalculator1.calculateRenditeForStock("AMD");
-       portfolioCalculator.calculateRenditeForStock("CAT");
-       portfolioCalculator.calculateRenditeForStock("CAT");
-       portfolioCalculator.calculateRenditeForStock("CAT");
 
-       System.out.println("jährliche erwartete Rendite (CAT): " + portfolioCalculator.calculateRenditeForStock("CAT")
-       + "\t jährliches Risiko (CAT): " + portfolioCalculator.calculateRiskForStocks("CAT")
-       + "\njährliche Rendite (AMD): " + portfolioCalculator1.calculateRenditeForStock("AMD")
-       + "\t jährliches Risiko (AMD): " + portfolioCalculator1.calculateRiskForStocks("AMD")
-       + "\nKovarianz von beiden Aktien: " + portfolioCalculator.calculateCovarianceOfStocks("CAT", "AMD")
-       + "\nKorrelation von beiden Aktien: " + portfolioCalculator.calculateCorrelationOfStocks("CAT","AMD")
-       + "\ndie zu erwartenden Rendite des Portfolios: " + portfolioCalculator.calculateRenditeForPortfolio("CAT","AMD")
-       + "\t das Risiko des Portfolios: " + portfolioCalculator.calculateRiskForPortfolio("CAT", "AMD"));
-	// write your code here
-        /*try{
-            File myStocks = new File("data/AMD.csv");
-            Scanner sc = new Scanner(myStocks);
+       System.out.print("jährliche erwartete Rendite (" + symbol1 + "): " + portfolioCalculator.calculateRenditeForStock(symbol1)
+       + "\t jährliches Risiko (" + symbol1 + "): " + portfolioCalculator.calculateRiskForStocks(symbol1)
+       + "\njährliche Rendite (" + symbol2 + "): " + portfolioCalculator1.calculateRenditeForStock(symbol2)
+       + "\t jährliches Risiko (" + symbol2 + "): " + portfolioCalculator1.calculateRiskForStocks(symbol2)
+       + "\nKovarianz von beiden Aktien: " + portfolioCalculator.calculateCovarianceOfStocks(symbol1, symbol2)
+       + "\nKorrelation von beiden Aktien: " + portfolioCalculator.calculateCorrelationOfStocks(symbol1,symbol2)
+       + "\ndie zu erwartenden Rendite des Portfolios: [");
 
-            while(sc.hasNextLine()) {
-                String data = sc.nextLine();
-                //System.out.println(data);
-            }
+       double[] portRendite = portfolioCalculator.calculateRenditeForPortfolio(symbol1,symbol2);
 
-            sc.close();
-             //BufferedReader = reading the lines directly
-            BufferedReader reader = new BufferedReader(new FileReader("data/CAT.csv"));
+       for (int i = 0; i < portRendite.length; ++i){
+           if (i != 0)
+                System.out.print("," + portRendite[i]);
+           else
+               System.out.print(portRendite[i]);
+       }
 
-            List<String> lines = new ArrayList<>();
-            String line;
+       double[] portRisiken = portfolioCalculator.calculateRiskForPortfolio(symbol1, symbol2);
 
-            while ((line = reader.readLine()) != null ) {
-                lines.add(line);
-            }
+       System.out.print("]" + "\ndie Risiken des Portfolios: [");
+       for (int i = 0; i < portRisiken.length; ++i){
+           if(i != 0 )
+               System.out.print("," + portRisiken[i] );
+           else
+               System.out.print(portRisiken[i] );
+       }
+       System.out.print("]");
 
-            System.out.println(lines.get(1));
-
-            //Tagesrendite = (Rendite(Zeitpunkt t) - Rendite(Zeitpunkt t-1))/Rendite(Zeitpunkt t-1))
-            double[] prices = new double[lines.size()-1];
-
-            //Prices in einem Array speichern
-            for(int i= 1; i<= lines.size()-1; i++) {
-                String datei = lines.get(i);
-                String[] dateiSplitted = datei.split(",");
-                prices[i-1] = Double.parseDouble(dateiSplitted[1].substring(1));
-            }
-
-            System.out.println(Arrays.toString(prices));
-
-
-
-            double[] tagesrendite = new double[prices.length-1];
-            double counter = 1;
-
-            for(int i = 1; i < prices.length; i++) {
-                tagesrendite[i - 1] = (prices[i-1] - prices[i]) / prices[i];
-                counter++;
-            }
-
-            System.out.println(Arrays.toString(tagesrendite));
-
-
-            //Erwartete Rendite
-            //wir sagen aus, dass die wahrscheinlichkeit der Rendite gleich sind.
-            double wahrscheinlichkeit = 1/counter;
-            double gesamtRendite = 0;
-            double erwarteteRendite = 0;
-            double average = 0;
-            Arrays.sort(tagesrendite);
-
-            for( int i = 0; i<= tagesrendite.length-1; i++ ) {
-                erwarteteRendite += wahrscheinlichkeit * tagesrendite[i];
-                gesamtRendite += tagesrendite[i];
-            }
-            average = gesamtRendite / counter;
-            System.out.println("die erwartete Rendite lautet: " + erwarteteRendite);
-            System.out.println("Durchschnittliche Rendite ist " + average*250);
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
     }
 }
