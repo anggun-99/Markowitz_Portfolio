@@ -52,6 +52,16 @@ public class Main {
                System.out.print(portRisiken[i] );
        }
        System.out.print("]");
+       diagram(portRisiken,portRendite);
 
     }
+    public static void diagram(double[]Risiko,double[]Rendite) {
+    	Graphic graphic = new Graphic ("Risk-Return Graph");
+    	Plotter plotter = graphic.getPlotter();
+ 	   for(int x =0 ; x<Risiko.length ; x++) {
+     	   plotter.setAutoGrid(x);
+            plotter.setXGrid(Risiko);
+      	   plotter.add(Risiko[x],Rendite[x]);
+         }
+         graphic.repaint();
 }
