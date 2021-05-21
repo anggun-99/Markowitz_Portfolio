@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import jserver.Board;
+import plotter.Graphic;
+import plotter.Plotter;
 
 public class Main {
 
     public static void main(String[] args) {
 
+
         DataController data = new DataController("data/");
-        Stock s = data.getDataForSymbol("AMZN");
+        Stock s = data.getDataForSymbol("NFLX");
         s.sortStocks();
 
         for (int i = 0; i < s.getStockPriceSize(); ++i){
@@ -19,8 +23,8 @@ public class Main {
                     s.getStockPriceAt(i).getPrice().toString());
         }
 
-        String symbol1 = "CAT";
-        String symbol2 = "AAPL";
+        String symbol1 = "ABNB";
+        String symbol2 = "ZM";
 
         PortfolioCalculator portfolioCalculator = new PortfolioCalculator(data);
         PortfolioCalculator portfolioCalculator1 = new PortfolioCalculator(data);
@@ -56,12 +60,13 @@ public class Main {
 
     }
     public static void diagram(double[]Risiko,double[]Rendite) {
-    	Graphic graphic = new Graphic ("Risk-Return Graph");
-    	Plotter plotter = graphic.getPlotter();
- 	   for(int x =0 ; x<Risiko.length ; x++) {
-     	   plotter.setAutoGrid(x);
+        Graphic graphic = new Graphic("Risk-Return Graph");
+        Plotter plotter = graphic.getPlotter();
+        for (int x = 0; x < Risiko.length; x++) {
+            plotter.setAutoGrid(x);
             plotter.setXGrid(Risiko);
-      	   plotter.add(Risiko[x],Rendite[x]);
-         }
-         graphic.repaint();
+            plotter.add(Risiko[x], Rendite[x]);
+        }
+        graphic.repaint();
+    }
 }
