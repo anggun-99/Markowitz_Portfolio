@@ -35,7 +35,12 @@ public class FileController {
 
                 Date date = new SimpleDateFormat("MM/dd/yyyy").parse(splitted[0]);
 
-                Double price = Double.parseDouble(splitted[1].substring(1));
+
+                Double price = 0.0;
+                if (splitted[1].charAt(0) < '0' || splitted[1].charAt(0) > '9')
+                    price = Double.parseDouble(splitted[1].substring(1));
+                else
+                    price = Double.parseDouble(splitted[1]);
 
                 s.addNewPrice(date, price);
             }

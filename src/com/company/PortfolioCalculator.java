@@ -15,6 +15,8 @@ public class PortfolioCalculator {
 
         double sum = 0;
         for (int i = 1; i < s.getStockPriceSize(); ++i){
+            if (i==800)
+                i = i;
             sum += (s.getStockPriceAt(i).getPrice() - s.getStockPriceAt(i-1).getPrice()) /
                     s.getStockPriceAt(i-1).getPrice();
         }
