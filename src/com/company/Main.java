@@ -1,36 +1,31 @@
 package com.company;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-import jserver.Board;
-import jserver.XSendAdapter;
-import plotter.Graphic;
-import plotter.Plotter;
-
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicBorders;
-
 public class Main {
-private XSendAdapter xsend;
-private JTextField indexField = new JTextField();
+
+
 
     public static void main(String[] args) {
+        Gui gui = new Gui("data/");
+        gui.start();
 
+        try {
+            gui.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    /*
+    public static void main(String[] args) {
 
+/*
        DataController data = new DataController("data/");
-        /*Stock s = data.getDataForSymbol("NFLX");
+        Stock s = data.getDataForSymbol("NFLX");
         s.sortStocks();
 
         for (int i = 0; i < s.getStockPriceSize(); ++i){
             System.out.println("Date: " + s.getStockPriceAt(i).getDate().toString() + "\t Price : " +
                     s.getStockPriceAt(i).getPrice().toString());
-        }*/
+        }
 
         String symbol1 = "BAYN.DE";
         String symbol2 = "BMW.DE";
@@ -125,15 +120,15 @@ private JTextField indexField = new JTextField();
         butt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("taxation is theft");
+                System.out.println("hi");
             }
         });
-        b.add(butt);/*
+        b.add(butt);
 
         graphic.addEastComponent(new JLabel("Insert Stock's Ticker"));
         graphic.addEastComponent(t1);
         graphic.addEastComponent(new JLabel("Insert Stock's Ticker"));
-        graphic.addEastComponent(new JTextField());*/
+        graphic.addEastComponent(new JTextField());
         graphic.addEastComponent(b);
 
 
@@ -158,4 +153,5 @@ private JTextField indexField = new JTextField();
         graphic.pack();
         graphic.repaint();
     }
+    */
 }

@@ -2,11 +2,34 @@ package com.company;
 
 import java.util.Date;
 
-public class PortfolioCalculator {
+public class PortfolioCalculator implements Runnable {
     private DataController controller;
+    private double[] yearlyReturnPort;
+    private double[] yearlyRiskPort;
+private String symbol1;
+private String symbol2;
+
 
     public PortfolioCalculator(DataController controller) {
         this.controller = controller;
+    }
+
+    public PortfolioCalculator(DataController controller, String symbol1, String symbol2) {
+        this.controller = controller;
+        this.symbol1 = symbol1;
+        this.symbol2 = symbol2;
+    }
+
+    public void calculate(String symbol1, String symbol2){
+        double sym1Return = calculateRenditeForStock(symbol1);
+        double sym1Risk = calculateRiskForStocks(symbol1);
+
+        double sym2Return = calculateRenditeForStock(symbol2);
+        double sym2Risk = calculateRiskForStocks(symbol2);
+
+        calculateRenditeForPortfolio(sym1Return, sym2Return);
+        calculateRiskForPortfolio(sym1Risk, sym2Risk, symbol1, symbol2);
+
     }
 
     //yearly expected return of a share
@@ -85,6 +108,15 @@ public class PortfolioCalculator {
         return renditePortfolio;
     }
 
+    void calculateRenditeForPortfolio(double sym1, double sym2) {
+        yearlyReturnPort = new double[11];
+
+        for(int w = 0; w < yearlyReturnPort.length; w++) {
+            yearlyReturnPort[w] = ((double) w /10)* sym1 + (1-((double) w /10))
+                    * sym2;
+        }
+    }
+
     public double[] calculateRiskForPortfolio(String symbol1, String symbol2) {
         double[] risikoPortfolio = new double[11];
 
@@ -95,5 +127,29 @@ public class PortfolioCalculator {
             + 2*(Double.valueOf(w)/10)*(1-(Double.valueOf(w)/10))*calculateCovarianceOfStocks(symbol1, symbol2));
         }
         return risikoPortfolio;
+    }
+
+    void calculateRiskForPortfolio(double sym1, double sym2, String symbol1, String symbol2) {
+        yearlyRiskPort = new double[11];
+
+        for(int w = 0; w< yearlyRiskPort.length; w++) {
+            yearlyRiskPort[w] = Math.sqrt((Double.valueOf(w)/10)*(Double.valueOf(w)/10)*sym1
+                    * sym1
+                    + (1-(Double.valueOf(w)/10))*(1-(Double.valueOf(w)/10))* sym2
+                    + 2*(Double.valueOf(w)/10)*(1-(Double.valueOf(w)/10))*calculateCovarianceOfStocks(symbol1, symbol2));
+        }
+    }
+
+    public double[] getYearlyReturnPort() {
+        return yearlyReturnPort;
+    }
+
+    public double[] getYearlyRiskPort() {
+        return yearlyRiskPort;
+    }
+
+    @Override
+    public void run() {
+        calculate(symbol1, symbol2);
     }
 }
