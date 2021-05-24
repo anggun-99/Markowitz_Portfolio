@@ -6,8 +6,8 @@ public class PortfolioCalculator implements Runnable {
     private DataController controller;
     private double[] yearlyReturnPort;
     private double[] yearlyRiskPort;
-private String symbol1;
-private String symbol2;
+    private String symbol1;
+    private String symbol2;
 
 
     public PortfolioCalculator(DataController controller) {
