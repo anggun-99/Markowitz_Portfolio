@@ -108,14 +108,14 @@ public class Gui extends Thread {
                 sym2 = sym2.replaceAll(" ", "");
                 sym2 = sym2.replaceAll("\t", "");
 
-                if (sym1.equals("") || !knownSymbols.contains(sym1)){
+                if (sym1.equals("")){
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the first valid ticker");
                     stock1.setText("");
                     stock2.setText("");
                 }
 
-                if (sym2.equals("") || !knownSymbols.contains(sym2)){
+                if (sym2.equals("")){
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the second valid ticker");
                     stock1.setText("");
@@ -158,14 +158,14 @@ public class Gui extends Thread {
                 sym2 = sym2.replaceAll(" ", "");
                 sym2 = sym2.replaceAll("\t", "");
 
-                if (sym1.equals("") || !knownSymbols.contains(sym1)){
+                if (sym1.equals("") ){
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the first valid ticker");
                     stock1.setText("");
                     stock2.setText("");
                 }
 
-                if (sym2.equals("") || !knownSymbols.contains(sym2)){
+                if (sym2.equals("")){
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the second valid ticker");
                     stock1.setText("");
@@ -219,20 +219,28 @@ public class Gui extends Thread {
     }
 
     public void diagram(double[]Risiko,double[]Rendite) {
-        graphic.setTitle("RISIKO-RENDITE-DIAGRAMM");
+       graphic.setTitle("RISIKO-RENDITE-DIAGRAMM");
         plotter.removeAll();
-
-        plotter.setYLine(0);
-        plotter.setXLine(0);
+        plotter.setDataLineStyle("Kreise", LineStyle.SYMBOL);
+		plotter.setDataColor("Kreise", Color.BLACK);
+		plotter.setSymbolSize(10);
+//        plotter.setYLine(0);
+//        plotter.setXLine(0);
         plotter.setBackground(Color.WHITE);
         plotter.setAutoXgrid(0.02);
+        plotter.setXLabelFormat("%.2f");
+        plotter.setYLabelFormat("%.2f");
         plotter.setAutoYgrid(0.05);
+
+
 
         for (int i = 0; i < Risiko.length; i++) {
             plotter.add(Risiko[i], Rendite[i]);
+            plotter.add("Kreise", Risiko[i], Rendite[i]);
         }
-
-
+      
+        	
+        
         graphic.pack();
         graphic.repaint();
     }
