@@ -1,6 +1,7 @@
 package com.company;
 
 import plotter.Graphic;
+import plotter.LineStyle;
 import plotter.Plotter;
 
 import javax.swing.*;
@@ -16,7 +17,6 @@ import java.util.HashSet;
 //deswegen ist multithreading für dieses Projekt geeignet.
 
 public class Gui extends Thread {
-    private JTextField indexField = new JTextField();
     private DataController data;
     private Graphic graphic;
     private Plotter plotter;
@@ -26,13 +26,15 @@ public class Gui extends Thread {
 
     public Gui(String dataPath){
         data = new DataController(dataPath);
-    };
+    }
 
     @Override
     public void run() {
         super.run();
         graphic = new Graphic("Portfoliomanagement nach Markowitz");
         plotter = graphic.getPlotter();
+        graphic.setPreferredSize(new Dimension(1000,1000));
+        graphic.setLocation(500,50);
 
         addMenu(graphic);
         addTextFieldAndButton(graphic);
@@ -61,8 +63,9 @@ public class Gui extends Thread {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(graphic, "Dieses Projekt eignet sich für das Portfoliomanagement" +
-                        " und die Portfolioselection nach der Markowitz-Theorie.\n Die Kombination von Anlagealternativen" +
-                        " wird mit Hilfe des Plotters graphisch dargestellt.", "Allgemein", JOptionPane.INFORMATION_MESSAGE);
+                        " und die Portfolioselection nach der Markowitz-Theorie von 2 Aktien.\n " +
+                        "Die Kombination von Anlagealternativen wird mit Hilfe des Plotters graphisch dargestellt.",
+                        "Allgemein", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -86,7 +89,7 @@ public class Gui extends Thread {
         plotter.removeAll();
 
         Box b = Box.createVerticalBox();
-        b.setBorder(BorderFactory.createEmptyBorder(200, 0, 50, 200));
+        b.setBorder(BorderFactory.createEmptyBorder(500, 0, 300, 50));
         b.add(new JLabel("Insert Stock's Ticker"));
         b.add(stock1);
         b.add(new JLabel("Insert Stock's Ticker"));
@@ -108,18 +111,23 @@ public class Gui extends Thread {
                 sym2 = sym2.replaceAll(" ", "");
                 sym2 = sym2.replaceAll("\t", "");
 
-                if (sym1.equals("")){
+                if (sym1.equals("")|| !knownSymbols.contains(sym1)){
                     correctInput = false;
-                    JOptionPane.showMessageDialog(graphic, "Please enter the first valid ticker");
+                    JOptionPane.showMessageDialog(graphic, "Please enter the first valid ticker" );
                     stock1.setText("");
                     stock2.setText("");
                 }
 
-                if (sym2.equals("")){
+                if (sym2.equals("")|| !knownSymbols.contains(sym2)){
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the second valid ticker");
                     stock1.setText("");
                     stock2.setText("");
+                }
+
+                if (sym1.equals(sym2)) {
+                    correctInput = false;
+                    JOptionPane.showMessageDialog(graphic, "Please enter 2 different ticker");
                 }
 
                 if (correctInput){
@@ -158,18 +166,23 @@ public class Gui extends Thread {
                 sym2 = sym2.replaceAll(" ", "");
                 sym2 = sym2.replaceAll("\t", "");
 
-                if (sym1.equals("") ){
+                if (sym1.equals("")|| !knownSymbols.contains(sym1) ){
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the first valid ticker");
                     stock1.setText("");
                     stock2.setText("");
                 }
 
-                if (sym2.equals("")){
+                if (sym2.equals("")|| !knownSymbols.contains(sym2)){
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the second valid ticker");
                     stock1.setText("");
                     stock2.setText("");
+                }
+
+                if (sym1.equals(sym2)) {
+                    correctInput = false;
+                    JOptionPane.showMessageDialog(graphic, "Please enter 2 different ticker");
                 }
 
                 if (correctInput) {
@@ -219,28 +232,30 @@ public class Gui extends Thread {
     }
 
     public void diagram(double[]Risiko,double[]Rendite) {
-       graphic.setTitle("RISIKO-RENDITE-DIAGRAMM");
+        graphic.setTitle("RISIKO-RENDITE-DIAGRAMM");
         plotter.removeAll();
+        plotter.removeDataObject("Kreise");
+
+
         plotter.setDataLineStyle("Kreise", LineStyle.SYMBOL);
-		plotter.setDataColor("Kreise", Color.BLACK);
-		plotter.setSymbolSize(10);
+        plotter.setDataColor("Kreise", Color.BLUE);
+        plotter.setSymbolSize(10);
 //        plotter.setYLine(0);
 //        plotter.setXLine(0);
         plotter.setBackground(Color.WHITE);
-        plotter.setAutoXgrid(0.02);
+        plotter.setAutoXgrid(0.05);
         plotter.setXLabelFormat("%.2f");
         plotter.setYLabelFormat("%.2f");
-        plotter.setAutoYgrid(0.05);
-
+        plotter.setAutoYgrid(0.02);
+        plotter.setLabelFormat("%.2f");
+        plotter.setStatusLine("Kombination von " + stock1.getText().toUpperCase() + " und " + stock2.getText().toUpperCase());
 
 
         for (int i = 0; i < Risiko.length; i++) {
             plotter.add(Risiko[i], Rendite[i]);
             plotter.add("Kreise", Risiko[i], Rendite[i]);
         }
-      
-        	
-        
+//oiiiiiiiiiiiiiiiiiiiiiii chongggiee
         graphic.pack();
         graphic.repaint();
     }
