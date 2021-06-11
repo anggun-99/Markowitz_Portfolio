@@ -33,15 +33,14 @@ public class Gui extends Thread {
         super.run();
         graphic = new Graphic("Portfoliomanagement nach Markowitz");
         plotter = graphic.getPlotter();
-        graphic.setPreferredSize(new Dimension(1000,1000));
-        graphic.setLocation(500,50);
+        //graphic.setPreferredSize(new Dimension(1000,1000));
+        //graphic.setLocation(500,50);
+        //graphic.setExtendedState(Frame.MAXIMIZED_BOTH);
 
         addMenu(graphic);
         addTextFieldAndButton(graphic);
 
-        graphic.pack();
-        graphic.repaint();
-
+        graphic.setExtendedState(Frame.MAXIMIZED_BOTH);
         knownSymbols = new HashSet<>();
 
         try {
@@ -52,6 +51,7 @@ public class Gui extends Thread {
         } catch (NullPointerException exp){
             System.out.println(exp.getStackTrace());
         }
+
     }
 
     private void addMenu(Graphic graphic) {
@@ -259,5 +259,6 @@ public class Gui extends Thread {
 
         graphic.pack();
         graphic.repaint();
+        graphic.setExtendedState(Frame.MAXIMIZED_BOTH);
     }
 }
