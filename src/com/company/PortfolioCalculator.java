@@ -123,7 +123,7 @@ public class PortfolioCalculator implements Runnable {
         for(int w = 0; w< risikoPortfolio.length; w++) {
             risikoPortfolio[w] = Math.sqrt((Double.valueOf(w)/10)*(Double.valueOf(w)/10)*calculateRiskForStocks(symbol1)
                     * calculateRiskForStocks(symbol1)
-            + (1-(Double.valueOf(w)/10))*(1-(Double.valueOf(w)/10))*calculateRiskForStocks(symbol2)
+            + (1-(Double.valueOf(w)/10))*(1-(Double.valueOf(w)/10))*calculateRiskForStocks(symbol2)*calculateRiskForStocks(symbol2)
             + 2*(Double.valueOf(w)/10)*(1-(Double.valueOf(w)/10))*calculateCovarianceOfStocks(symbol1, symbol2));
         }
         return risikoPortfolio;

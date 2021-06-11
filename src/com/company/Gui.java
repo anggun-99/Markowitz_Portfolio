@@ -248,14 +248,15 @@ public class Gui extends Thread {
         plotter.setYLabelFormat("%.2f");
         plotter.setAutoYgrid(0.02);
         plotter.setLabelFormat("%.2f");
-        plotter.setStatusLine("Kombination von " + stock1.getText().toUpperCase() + " und " + stock2.getText().toUpperCase());
+        plotter.setStatusLine("Kombination von " + stock1.getText().toUpperCase() + " und "
+                + stock2.getText().toUpperCase());
 
 
         for (int i = 0; i < Risiko.length; i++) {
             plotter.add(Risiko[i], Rendite[i]);
             plotter.add("Kreise", Risiko[i], Rendite[i]);
         }
-//oiiiiiiiiiiiiiiiiiiiiiii chongggiee
+
         graphic.pack();
         graphic.repaint();
     }
