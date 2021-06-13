@@ -82,6 +82,13 @@ public class Gui extends Thread {
         infoMenu.add(ueberAutoren);
 
     }
+    private void addPositionInput(Graphic graphic) {
+    	graphic.addBottomComponent(Box.createHorizontalStrut(500));
+		graphic.addBottomComponent(new JLabel("Risiko")); // add a "Risiko" text on the bottom of the graphic
+		graphic.addWestComponent(Box.createVerticalStrut(300));
+		graphic.addWestComponent(new JLabel("Rendite")); // add a "Rendite" text on the left of the graphic
+
+	}
 
     private void addTextFieldAndButton(Graphic graphic) {
         stock1 = new JTextField();
