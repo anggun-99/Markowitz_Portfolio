@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 //Multithreading verhindert die Blockierung vom GuI-Thread
@@ -17,15 +18,18 @@ import java.util.HashSet;
 //deswegen ist multithreading für dieses Projekt geeignet.
 
 public class Gui extends Thread {
+    private int stockCount = 2;
     private DataController data;
     private Graphic graphic;
     private Plotter plotter;
     private JTextField stock1;
     private JTextField stock2;
+    private ArrayList<JTextField> stocks;
     private HashSet<String> knownSymbols;
 
     public Gui(String dataPath){
         data = new DataController(dataPath);
+        stocks = new ArrayList<>();
     }
 
     @Override
@@ -84,16 +88,44 @@ public class Gui extends Thread {
     }
 
     private void addTextFieldAndButton(Graphic graphic) {
+
+/*
+        while (stocks.size() < stockCount) {
+            stocks.add(new JTextField());
+        }*/
+
         stock1 = new JTextField();
         stock2 = new JTextField();
         plotter.removeAll();
+        //graphic.removeAll();
 
         Box b = Box.createVerticalBox();
         b.setBorder(BorderFactory.createEmptyBorder(500, 0, 300, 50));
-        b.add(new JLabel("Insert Stock's Ticker"));
+
+       /* for (int i = 0; i < stockCount; ++i) {
+            b.add(new JLabel("Insert Stock " + i + " Ticker"));
+            b.add(stocks.get(i));
+        }
+        */
+        b.add(new JLabel("Insert Stock 1 Ticker"));
         b.add(stock1);
-        b.add(new JLabel("Insert Stock's Ticker"));
+        //b.add(stocks.get(0));
+        b.add(new JLabel("Insert Stock 2 Ticker"));
         b.add(stock2);
+        //b.add(stocks.get(1));
+
+        // button to add extra stock input field
+        JButton extraInput = new JButton("Add a stock");
+        extraInput.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stockCount++;
+                BorderLayout lay = (BorderLayout)graphic.getLayout();
+                graphic.remove(lay.getLayoutComponent(BorderLayout.EAST));
+                addTextFieldAndButton(graphic);
+
+            }
+        });
 
         JButton startButton = new JButton("START");
         startButton.addActionListener(new ActionListener() {
@@ -227,8 +259,11 @@ public class Gui extends Thread {
         });
         b.add(startButton);
         b.add(informationButton);
+        b.add(extraInput);
 
-        graphic.addEastComponent(b);
+        graphic.add(b,BorderLayout.EAST);
+        //graphic.addEastComponent(b);
+        graphic.repaint();
     }
 
     public void diagram(double[]Risiko,double[]Rendite) {

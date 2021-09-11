@@ -40,4 +40,8 @@ public class Stock {
         return stocks.size();
     }
 
+    Date getLatestDate() {
+        return this.stocks.get(getStockPriceSize() - 1).getDate();
+    }
+
 }

@@ -1,7 +1,10 @@
 package com.company;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -52,6 +55,24 @@ public class FileController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void appendToFile(ArrayList<String> s, String symbol) {
+        String fileName = fileLocation + symbol + ".csv";
+        try {
+            FileWriter fw = new FileWriter(fileName, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for (int i = 0; i < s.size(); ++i) {
+                bw.write(s.get(i));
+                bw.newLine();
+            }
+
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
