@@ -27,7 +27,7 @@ public class Gui extends Thread {
     private ArrayList<JTextField> stocks;
     private HashSet<String> knownSymbols;
 
-    public Gui(String dataPath){
+    public Gui(String dataPath) {
         data = new DataController(dataPath);
         stocks = new ArrayList<>();
     }
@@ -37,9 +37,6 @@ public class Gui extends Thread {
         super.run();
         graphic = new Graphic("Portfoliomanagement nach Markowitz");
         plotter = graphic.getPlotter();
-        //graphic.setPreferredSize(new Dimension(1000,1000));
-        //graphic.setLocation(500,50);
-        //graphic.setExtendedState(Frame.MAXIMIZED_BOTH);
 
         addMenu(graphic);
         addTextFieldAndButton(graphic);
@@ -52,7 +49,7 @@ public class Gui extends Thread {
             for (final File fileEntry : folder.listFiles()) {
                 knownSymbols.add(fileEntry.getName().substring(0, fileEntry.getName().indexOf('.')));
             }
-        } catch (NullPointerException exp){
+        } catch (NullPointerException exp) {
             System.out.println(exp.getStackTrace());
         }
 
@@ -67,8 +64,8 @@ public class Gui extends Thread {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(graphic, "Dieses Projekt eignet sich für das Portfoliomanagement" +
-                        " und die Portfolioselection nach der Markowitz-Theorie von 2 Aktien.\n " +
-                        "Die Kombination von Anlagealternativen wird mit Hilfe des Plotters graphisch dargestellt.",
+                                " und die Portfolioselection nach der Markowitz-Theorie von 2 Aktien.\n " +
+                                "Die Kombination von Anlagealternativen wird mit Hilfe des Plotters graphisch dargestellt.",
                         "Allgemein", JOptionPane.INFORMATION_MESSAGE);
             }
         });
@@ -86,20 +83,17 @@ public class Gui extends Thread {
         infoMenu.add(ueberAutoren);
 
     }
-    private void addPositionInput(Graphic graphic) {
-    	graphic.addBottomComponent(Box.createHorizontalStrut(500));
-		graphic.addBottomComponent(new JLabel("Risiko")); // add a "Risiko" text on the bottom of the graphic
-		graphic.addWestComponent(Box.createVerticalStrut(300));
-		graphic.addWestComponent(new JLabel("Rendite")); // add a "Rendite" text on the left of the graphic
 
-	}
+    private void addPositionInput(Graphic graphic) {
+        graphic.addBottomComponent(Box.createHorizontalStrut(500));
+        graphic.addBottomComponent(new JLabel("Risiko")); // add a "Risiko" text on the bottom of the graphic
+        graphic.addWestComponent(Box.createVerticalStrut(300));
+        graphic.addWestComponent(new JLabel("Rendite")); // add a "Rendite" text on the left of the graphic
+
+    }
 
     private void addTextFieldAndButton(Graphic graphic) {
 
-/*
-        while (stocks.size() < stockCount) {
-            stocks.add(new JTextField());
-        }*/
 
         stock1 = new JTextField();
         stock2 = new JTextField();
@@ -109,11 +103,6 @@ public class Gui extends Thread {
         Box b = Box.createVerticalBox();
         b.setBorder(BorderFactory.createEmptyBorder(500, 0, 300, 50));
 
-       /* for (int i = 0; i < stockCount; ++i) {
-            b.add(new JLabel("Insert Stock " + i + " Ticker"));
-            b.add(stocks.get(i));
-        }
-        */
         b.add(new JLabel("Insert Stock 1 Ticker"));
         b.add(stock1);
         //b.add(stocks.get(0));
@@ -127,7 +116,7 @@ public class Gui extends Thread {
             @Override
             public void actionPerformed(ActionEvent e) {
                 stockCount++;
-                BorderLayout lay = (BorderLayout)graphic.getLayout();
+                BorderLayout lay = (BorderLayout) graphic.getLayout();
                 graphic.remove(lay.getLayoutComponent(BorderLayout.EAST));
                 addTextFieldAndButton(graphic);
 
@@ -150,14 +139,14 @@ public class Gui extends Thread {
                 sym2 = sym2.replaceAll(" ", "");
                 sym2 = sym2.replaceAll("\t", "");
 
-                if (sym1.equals("")|| !knownSymbols.contains(sym1)){
+                if (sym1.equals("") || !knownSymbols.contains(sym1)) {
                     correctInput = false;
-                    JOptionPane.showMessageDialog(graphic, "Please enter the first valid ticker" );
+                    JOptionPane.showMessageDialog(graphic, "Please enter the first valid ticker");
                     stock1.setText("");
                     stock2.setText("");
                 }
 
-                if (sym2.equals("")|| !knownSymbols.contains(sym2)){
+                if (sym2.equals("") || !knownSymbols.contains(sym2)) {
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the second valid ticker");
                     stock1.setText("");
@@ -169,7 +158,7 @@ public class Gui extends Thread {
                     JOptionPane.showMessageDialog(graphic, "Please enter 2 different ticker");
                 }
 
-                if (correctInput){
+                if (correctInput) {
                     PortfolioCalculator port = new PortfolioCalculator(data, sym1, sym2);
                     Thread t = new Thread(port);
                     t.start();
@@ -205,14 +194,14 @@ public class Gui extends Thread {
                 sym2 = sym2.replaceAll(" ", "");
                 sym2 = sym2.replaceAll("\t", "");
 
-                if (sym1.equals("")|| !knownSymbols.contains(sym1) ){
+                if (sym1.equals("") || !knownSymbols.contains(sym1)) {
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the first valid ticker");
                     stock1.setText("");
                     stock2.setText("");
                 }
 
-                if (sym2.equals("")|| !knownSymbols.contains(sym2)){
+                if (sym2.equals("") || !knownSymbols.contains(sym2)) {
                     correctInput = false;
                     JOptionPane.showMessageDialog(graphic, "Please enter the second valid ticker");
                     stock1.setText("");
@@ -227,8 +216,8 @@ public class Gui extends Thread {
                 if (correctInput) {
                     PortfolioCalculator port = new PortfolioCalculator(data, sym1, sym2);
 
-                    double[] portRendite = port.calculateRenditeForPortfolio(sym1,sym2);
-                    double[] portRisiko = port.calculateRiskForPortfolio(sym1,sym2);
+                    double[] portRendite = port.calculateRenditeForPortfolio(sym1, sym2);
+                    double[] portRisiko = port.calculateRiskForPortfolio(sym1, sym2);
 
                     int weightSym1Return = 0;
                     int weightSym2Return = 100;
@@ -240,18 +229,18 @@ public class Gui extends Thread {
                             + "\njährliche Rendite (" + sym2 + "): " + port.calculateRenditeForStock(sym2) * 100 + " %"
                             + "\t \t jährliches Risiko (" + sym2 + "): " + port.calculateRiskForStocks(sym2) * 100 + " %"
                             + "\nKovarianz von beiden Aktien: " + port.calculateCovarianceOfStocks(sym1, sym2)
-                            + "\nKorrelation von beiden Aktien: " + port.calculateCorrelationOfStocks(sym1,sym2)
+                            + "\nKorrelation von beiden Aktien: " + port.calculateCorrelationOfStocks(sym1, sym2)
                             + "\n\ndie zu erwartenden Rendite des Portfolios: \n";
 
-                    for( int i = 0; i < portRendite.length; i++ ) {
+                    for (int i = 0; i < portRendite.length; i++) {
                         msg += weightSym1Return + " % von " + sym1 + " und " + weightSym2Return
                                 + " % von " + sym2 + " ergibt: " + (portRendite[i]) * 100 + " % \n";
-                        weightSym1Return +=10;
-                        weightSym2Return -=10;
+                        weightSym1Return += 10;
+                        weightSym2Return -= 10;
                     }
                     msg += "\n die Risiken des Portfolios: \n";
 
-                    for( int i = 0; i < portRisiko.length; i++ ) {
+                    for (int i = 0; i < portRisiko.length; i++) {
                         msg += weightSym1Risk + " % von " + sym1 + " und " + weightSym2Risk
                                 + " % von " + sym2 + " ergibt: " + (portRisiko[i]) * 100 + " % \n";
                         weightSym1Risk += 10;
@@ -266,14 +255,14 @@ public class Gui extends Thread {
         });
         b.add(startButton);
         b.add(informationButton);
-        b.add(extraInput);
+        //b.add(extraInput);
 
-        graphic.add(b,BorderLayout.EAST);
+        graphic.add(b, BorderLayout.EAST);
         //graphic.addEastComponent(b);
         graphic.repaint();
     }
 
-    public void diagram(double[]Risiko,double[]Rendite) {
+    public void diagram(double[] Risiko, double[] Rendite) {
         graphic.setTitle("RISIKO-RENDITE-DIAGRAMM");
         plotter.removeAll();
         plotter.removeDataObject("Kreise");
@@ -303,4 +292,5 @@ public class Gui extends Thread {
         graphic.repaint();
         graphic.setExtendedState(Frame.MAXIMIZED_BOTH);
     }
+
 }

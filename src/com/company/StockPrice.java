@@ -6,7 +6,7 @@ public class StockPrice implements Comparable<StockPrice> {
     private Date date;
     private Double price;
 
-    public StockPrice(Date date, Double price){
+    public StockPrice(Date date, Double price) {
         this.date = date;
         this.price = price;
     }

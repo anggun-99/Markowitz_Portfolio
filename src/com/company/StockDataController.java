@@ -1,13 +1,11 @@
 package com.company;
 
-import java.util.HashMap;
 //asking for the stock data
 public class StockDataController {
-    private String fileDir;
     private FileController reader;
     private API_Controller apiController;
 
-    public StockDataController(String fileDir){
+    public StockDataController(String fileDir) {
         reader = new FileController(fileDir);
         apiController = new API_Controller();
     }
@@ -17,8 +15,7 @@ public class StockDataController {
         if (s != null) {
             apiController.addMissingPriceData(s);
             return s;
-        }
-        else {
+        } else {
             System.out.println("Stock " + symbol + " is not available");
             return null;
         }

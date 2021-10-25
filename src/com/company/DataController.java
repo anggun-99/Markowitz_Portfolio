@@ -4,10 +4,11 @@ import java.util.HashMap;
 
 //saving the stock data
 public class DataController {
+    //HashMap : a list of keys and values.
     private HashMap<String, Stock> stocks;
     private StockDataController controller;
 
-    public DataController(String path){
+    public DataController(String path) {
         this.stocks = new HashMap<>();
         this.controller = new StockDataController(path);
     }

@@ -4,10 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -19,27 +17,24 @@ public class FileController {
         this.fileLocation = fileLocation;
     }
 
+    //reading my files
     public Stock readFile(String symbol){
         try {
             File myStocks = new File(fileLocation + symbol + ".csv");
             Scanner sc = new Scanner(myStocks);
-
             Stock s = new Stock(symbol);
 
+            //reading the first line to move the scanner to the second line (1st line contains symbol name)
             String sym = "";
-            if (sc.hasNextLine()){
+            if (sc.hasNextLine())
                 sym = sc.nextLine();
-            }
 
             while (sc.hasNextLine()) {
                 String data = sc.nextLine();
-
                 String[] splitted = data.split(",");
-
                 Date date = new SimpleDateFormat("MM/dd/yyyy").parse(splitted[0]);
 
-
-                Double price = 0.0;
+                double price;
                 if (splitted[1].charAt(0) < '0' || splitted[1].charAt(0) > '9')
                     price = Double.parseDouble(splitted[1].substring(1));
                 else
@@ -49,7 +44,6 @@ public class FileController {
             }
 
             s.sortStocks();
-
             return s;
         }catch (IOException | ParseException e){
             e.printStackTrace();
@@ -57,6 +51,7 @@ public class FileController {
         return null;
     }
 
+    //daten vom API speichern
     public void appendToFile(ArrayList<String> s, String symbol) {
         String fileName = fileLocation + symbol + ".csv";
         try {
